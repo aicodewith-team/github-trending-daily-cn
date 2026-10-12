@@ -51,3 +51,7 @@ GitHub Trending 没有官方 API，脚本靠页面 HTML 结构解析。GitHub �
 ## 12. macOS（未实测）
 
 作者只在 Linux 上运行过。macOS 上 cron 需要给 `/usr/sbin/cron`「完全磁盘访问」权限，苹果更推荐 launchd。zsh 下保存 Key 的写法见 README。
+
+## 13. 手动运行退出、没有出现「日报已生成」（实测）
+
+终端只显示 `Reading additional input from stdin...` 后就退出时，模型调用失败的原因写在 `logs/当天日期.jsonl` 末尾的 `"type":"error"` / `"type":"turn.failed"` 行。用无效 Key 测试时得到的是 `401 Unauthorized`，重新保存正确的 Key 即可。
