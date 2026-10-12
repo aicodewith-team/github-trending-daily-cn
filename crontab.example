@@ -1,0 +1,7 @@
+# 用法：crontab -e，把下面两行改好后粘进去。
+# 1) PATH 里要能找到 node（codex 的入口脚本是 #!/usr/bin/env node）。
+#    把 `dirname "$(which node)"` 的结果放在最前面；node 在 /usr/bin 的可以不改。
+PATH=/usr/local/bin:/usr/bin:/bin
+# 2) 每天本机时间 8:00 运行。CODEX_BIN 填 `which codex` 的结果。
+#    服务器是 UTC 时区、想要北京时间 8 点，就把 "0 8" 改成 "0 0"。
+0 8 * * * . $HOME/.aicw_env && CODEX_BIN=/path/to/codex $HOME/trending-daily/trending-daily.sh >> $HOME/trending-daily/logs/cron.log 2>&1

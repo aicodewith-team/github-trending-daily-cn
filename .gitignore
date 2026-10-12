@@ -1,0 +1,11 @@
+# 运行产物
+data/
+reports/
+logs/*
+!logs/.gitkeep
+# Codex 运行时会在 CODEX_HOME 里写会话、数据库、缓存，只保留配置
+codex-home/*
+!codex-home/config.toml
+# 密钥
+.env
+.aicw_env
