@@ -1,0 +1,5 @@
+$ . ~/.aicw_env && ./trending-daily.sh
+抓到 8 个仓库，README 成功 8 个
+Reading additional input from stdin...
+"usage":{"input_tokens":20634,"cached_input_tokens":4224,"cache_write_input_tokens":0,"output_tokens":2472,"reasoning_output_tokens":55}
+日报已生成：reports/2026-10-12.md

@@ -17,7 +17,7 @@
 | curl | 8.14.1 | |
 | 模型 | gpt-5.6-sol | 通过 AI Code With 的 Responses 接口 |
 
-只在 Linux 上跑过。
+只在 Linux（Debian）上跑过，包括一次真实 cron 定时触发。macOS 未实测。
 
 ## 文件
 
@@ -37,11 +37,19 @@ examples/                一次真实运行的日报和终端输出
 ## 快速开始
 
 ```bash
-npm i -g @openai/codex@0.162.1
+npm i -g @openai/codex@0.162.1      # 报 EACCES 见下方说明
 codex --version                      # 应输出 codex-cli 0.162.1
 
 git clone https://github.com/aicodewith-team/github-trending-daily-cn.git ~/trending-daily
 cd ~/trending-daily
+```
+
+系统自带的 node 装全局包报 `EACCES` 时，改用用户目录，不要 `sudo npm`：
+
+```bash
+npm config set prefix ~/.npm-global
+echo 'export PATH="$HOME/.npm-global/bin:$PATH"' >> ~/.bashrc && . ~/.bashrc
+npm i -g @openai/codex@0.162.1
 ```
 
 保存 Key（只能在 bash 里执行；输入时不回显，不进 history）：
@@ -76,7 +84,7 @@ Key 只含字母、数字、`-`、`_`、`.` 时，两种写法生成的文件都
 ```
 抓到 8 个仓库，README 成功 8 个
 Reading additional input from stdin...
-"usage":{"input_tokens":20626,"cached_input_tokens":12544,"cache_write_input_tokens":0,"output_tokens":2370,"reasoning_output_tokens":91}
+"usage":{"input_tokens":20634,"cached_input_tokens":4224,"cache_write_input_tokens":0,"output_tokens":2472,"reasoning_output_tokens":55}
 日报已生成：reports/2026-10-12.md
 ```
 
@@ -87,7 +95,8 @@ Reading additional input from stdin...
 1. `which codex`、`which node` 查绝对路径；codex 路径填进 `CODEX_BIN=`，node 所在目录放进 crontab 的 `PATH=`。
 2. cron 不读 `.bashrc`，Key 靠 `. $HOME/.aicw_env` 加载。
 3. cron 按机器本地时区；UTC 服务器上北京时间 8 点写 `0 0 * * *`。
-4. macOS 上 cron 需要“完全磁盘访问”权限，官方更推荐 launchd（未实测）。
+4. 出问题先看 [docs/troubleshooting.md](docs/troubleshooting.md)。
+5. macOS 上 cron 需要“完全磁盘访问”权限，官方更推荐 launchd（未实测）。
 
 ## 安全
 
